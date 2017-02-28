@@ -1,6 +1,6 @@
-module Math.Utils where
+module GIS.Math.Utils where
 
-import Types
+import GIS.Types
 import Control.Lens
 import Control.Lens.Tuple
 

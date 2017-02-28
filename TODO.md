@@ -1,4 +1,6 @@
 - [x] parse tiger data
+- [ ] read a .shp object when a dbf file doesn't exist.
+  - [ ] take in dimensions of 
 - [x] generate a .png from tiger data (for debugging)
   - [ ] label interiors somehow?
   - [ ] projections
@@ -18,8 +20,9 @@
     - [ ] Bottomley
     - [ ] Werner
     - [ ] sinusoidal? 
-- [ ] generate a .svg with diagrams backend
-  - [ ] also have flag to optionally install cairo parts (so no need for unhaskell!)
+    - [ ] what projection distorts compactness minimally?
+- [x] generate a .svg with diagrams backend
+  - [x] also have flag to optionally install cairo parts (so no need for unhaskell!)
 - [ ] measure compactness mathematically :)
   - [ ] current method
   - [ ] fractal dimension

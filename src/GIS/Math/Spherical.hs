@@ -1,13 +1,13 @@
-module Math.Spherical where
+module GIS.Math.Spherical where
 
 import Control.Lens
 import Control.Lens.Tuple
 import Data.Function
 import Data.List
-import Types
+import GIS.Types
 import Data.Composition
-import Math.Projections
-import Math.Utils
+import GIS.Math.Projections
+import GIS.Math.Utils
 
 -- use projection ahead of time so it works nicely
 -- idc about much besides labelling tbh

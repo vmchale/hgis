@@ -1,17 +1,17 @@
-module Compute where
+module GIS.Compute where
 
 import Geometry.Shapefile.MergeShpDbf
 import Geometry.Shapefile.Types
 import Data.List
 import Data.Maybe
 import Data.Monoid
-import Math.Projections
-import Math.Spherical
-import Utils
+import GIS.Math.Projections
+import GIS.Math.Spherical
+import GIS.Utils
 import Control.Lens.Tuple
 import Control.Lens
 import Control.Monad
-import Types
+import GIS.Types
 
 --doesn't use the projection tho!!
 getDistricts :: FilePath -> IO [District]
@@ -30,7 +30,7 @@ getDistricts filepath = do
 getShapes :: FilePath -> IO [[[Point]]]
 getShapes = (fmap (fmap ((project mercator) . (view shape)))) . getDistricts
 
-getAll = concat <$> getShapes "data/2016/tl_2016_us_cd115.shp"
+getAll = (fmap concat) . getShapes
 
 getPerimeter :: [[Point]] -> Double
 getPerimeter lines = sum $ fmap segmentLength lines

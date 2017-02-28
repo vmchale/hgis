@@ -1,17 +1,17 @@
-module Graphics.PlotPNG where
+module GIS.Graphics.PlotPNG where
 
 import Graphics.Rendering.Chart
 import Graphics.Rendering.Chart.Easy
 import Graphics.Rendering.Chart.Backend.Cairo
-import Types
+import GIS.Types
 import Data.Monoid
-import Compute
-import Math.Projections
+import GIS.Compute
+import GIS.Math.Projections
 import Control.Lens
 import Control.Lens.Tuple
 --
-import Math.Spherical
-import Utils
+import GIS.Math.Spherical
+import GIS.Utils
 
 makeLabelledMapPng :: String -> FilePath -> [(Polygon, String)] -> IO ()
 makeLabelledMapPng title filepath points = do

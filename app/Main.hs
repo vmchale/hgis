@@ -1,6 +1,6 @@
 module Main where
 
-import Exe.Opt
+import GIS.Exe.Opt
 
 main :: IO ()
 main = exec

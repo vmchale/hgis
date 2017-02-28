@@ -1,11 +1,11 @@
-module Graphics.PlotSVG where
+module GIS.Graphics.PlotSVG where
 
 import Graphics.Rendering.Chart.Easy
 import Graphics.Rendering.Chart.Backend.Diagrams 
-import Compute
-import Types
+import GIS.Compute
+import GIS.Types
 import Data.Monoid
-import Math.Projections
+import GIS.Math.Projections
 
 mercatorFullSVG :: String -> FilePath -> FilePath -> IO ()
 mercatorFullSVG title outfile dbfFile = do

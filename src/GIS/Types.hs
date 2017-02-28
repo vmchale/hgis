@@ -1,7 +1,7 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE TemplateHaskell   #-}
 
-module Types where
+module GIS.Types where
 
 import Text.PrettyPrint.ANSI.Leijen
 import GHC.Generics

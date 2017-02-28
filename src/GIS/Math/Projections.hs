@@ -1,10 +1,10 @@
 -- | Note you can use `id` to make a null projection: this isn't great but it can help you debug
-module Math.Projections where
+module GIS.Math.Projections where
 
 import Control.Lens
 import Control.Lens.Tuple
-import Types
-import Math.Utils
+import GIS.Types
+import GIS.Math.Utils
 
 washingtonDC :: Point
 washingtonDC = over _2 radians $ over _1 radians (38.9072, -77.0369)

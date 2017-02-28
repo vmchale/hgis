@@ -20,15 +20,21 @@ Flag cairo {
 
 library
   hs-source-dirs:      src
-  exposed-modules:     Exe.Opt
-                     , Math.Spherical
-                     , Graphics.PlotPNG
-                     , Graphics.PlotSVG
-  other-modules:       Compute
-                     , Math.Projections
-                     , Math.Utils
-                     , Utils
-                     , Types
+  if flag(cairo)
+    exposed-modules:   GIS.Exe.Opt
+                     , GIS.Exe.OptCairo
+                     , GIS.Math.Spherical
+                     , GIS.Graphics.PlotPNG
+                     , GIS.Graphics.PlotSVG
+  else
+    exposed-modules:   GIS.Exe.Opt
+                     , GIS.Math.Spherical
+                     , GIS.Graphics.PlotSVG
+  other-modules:       GIS.Compute
+                     , GIS.Math.Projections
+                     , GIS.Math.Utils
+                     , GIS.Utils
+                     , GIS.Types
   build-depends:       base >= 4.7 && < 5
                      , readshp
                      , optparse-generic
@@ -48,7 +54,10 @@ library
 
 executable hgis
   hs-source-dirs:      app
-  main-is:             Main.hs
+  if flag(cairo)
+    main-is:           Main.hs
+  else
+    main-is:           MainPng.hs
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   build-depends:       base
                      , hgis
