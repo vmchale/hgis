@@ -1,0 +1,30 @@
+- [x] parse tiger data
+- [x] generate a .png from tiger data (for debugging)
+  - [ ] label interiors somehow?
+  - [ ] projections
+    - [ ] math.project module??
+    - [ ] craig retroazimuthal
+    - [ ] gnomonic
+    - [ ] littrow
+    - [ ] fix mercator
+    - [ ] gall stereographic
+    - [ ] Peirce quincuncial
+    - [ ] eckert IV
+    - [ ] Mollweide
+    - [ ] robinson
+    - [ ] transverse mercator
+    - [ ] winkel triple
+    - [ ] Kavrayskiy VII
+    - [ ] Bottomley
+    - [ ] Werner
+    - [ ] sinusoidal? 
+- [ ] generate a .svg with diagrams backend
+  - [ ] also have flag to optionally install cairo parts (so no need for unhaskell!)
+- [ ] measure compactness mathematically :)
+  - [ ] current method
+  - [ ] fractal dimension
+  - [ ] concavity obviously
+  - [ ] look at what's been done already w.r.t. appealing to justices (integrate other voter data? also account "how close" they are to distr. rather than just dem/rep)
+- [ ] consider an optimizing program to show non-gerrymandered districts
+- [ ] yesod etc. webapp would be really good for public engagement
+  - [ ] would require elm/purescript though :|
