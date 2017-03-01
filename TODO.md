@@ -1,4 +1,5 @@
 - [x] parse tiger data
+- [ ] data type for Region, not just District
 - [ ] Compute.hs -> Hylo.hs
 - [ ] read a .shp object when a dbf file doesn't exist.
   - [ ] take in dimensions of 

@@ -18,7 +18,7 @@ import System.Directory
 
 districtToMap :: [District] -> Map
 districtToMap districts = labelledDistricts .~ dist $ def
-    where dist = zip (concat $ (fmap _shape) districts) (fmap _districtLabel districts)
+    where dist = zip (concatMap _shape districts) (fmap _districtLabel districts)
 
 getDistricts :: FilePath -> IO [District]
 getDistricts filepath = do

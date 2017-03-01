@@ -26,21 +26,22 @@ library
                      , GIS.Math.Spherical
                      , GIS.Graphics.PlotPNG
                      , GIS.Graphics.PlotSVG
+                     , GIS.Hylo
   }
   else {
     exposed-modules:   GIS.Exe.Opt
                      , GIS.Math.Spherical
                      , GIS.Graphics.PlotSVG
+                     , GIS.Hylo
   }
-  other-modules:       GIS.Hylo
-                     , GIS.Math.Projections
+  other-modules:       GIS.Math.Projections
                      , GIS.Math.Utils
                      , GIS.Utils
                      , GIS.Graphics.Plot
                      , GIS.Graphics.Types
                      , GIS.Types
   if flag(cairo) {
-    build-depends:   base >= 4.7 && < 5
+    build-depends:     base >= 4.7 && < 5
                      , readshp
                      , optparse-generic
                      , Chart
