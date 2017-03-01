@@ -5,6 +5,7 @@ import Control.Lens
 import Control.Lens.Tuple
 import GIS.Types
 import GIS.Math.Utils
+import GIS.Graphics.Types
 
 washingtonDC :: Point
 washingtonDC = over _2 radians $ over _1 radians (38.9072, -77.0369)
@@ -32,5 +33,8 @@ albers referencePoint (long, lat) = (rho * (sin theta), rho' - rho * (cos theta)
           phi2 = (radians 50)
           (referenceLong, referenceLat) = referencePoint 
 
-project :: Projection -> [Polygon] -> [Polygon]
-project f = fmap $ fmap (f . toRadians)
+project :: Projection -> Polygon -> Polygon
+project f = fmap (f . toRadians)
+
+projectMap :: Projection -> Map -> Map
+projectMap p = over (labelledDistricts) (fmap (over _1 (project p)))

@@ -28,7 +28,7 @@ getDistricts filepath = do
         pure $ map (\(a,b,c,d) -> District a b c d) tuple
 
 getShapes :: FilePath -> IO [[Polygon]]
-getShapes = (fmap (fmap ((project mercator) . (view shape)))) . getDistricts
+getShapes = (fmap (fmap ((fmap (project mercator)) . (view shape)))) . getDistricts
 
 getAll = (fmap concat) . getShapes
 
