@@ -20,16 +20,18 @@ Flag cairo {
 
 library
   hs-source-dirs:      src
-  if flag(cairo)
+  if flag(cairo) {
     exposed-modules:   GIS.Exe.Opt
                      , GIS.Exe.OptCairo
                      , GIS.Math.Spherical
                      , GIS.Graphics.PlotPNG
                      , GIS.Graphics.PlotSVG
-  else
+  }
+  else {
     exposed-modules:   GIS.Exe.Opt
                      , GIS.Math.Spherical
                      , GIS.Graphics.PlotSVG
+  }
   other-modules:       GIS.Hylo
                      , GIS.Math.Projections
                      , GIS.Math.Utils
@@ -37,7 +39,7 @@ library
                      , GIS.Graphics.Plot
                      , GIS.Graphics.Types
                      , GIS.Types
-  if flag(cairo)
+  if flag(cairo) {
     build-depends:   base >= 4.7 && < 5
                      , readshp
                      , optparse-generic
@@ -52,8 +54,9 @@ library
                      , directory
                      , colour
                      , data-default
-  else
-    build-depends:   base >= 4.7 && < 5
+  }
+  else {
+    build-depends:     base >= 4.7 && < 5
                      , readshp
                      , optparse-generic
                      , Chart
@@ -67,6 +70,7 @@ library
                      , directory
                      , colour
                      , data-default
+  }
   if flag(cairo)
     pkgconfig-depends: cairo
   default-language:    Haskell2010
