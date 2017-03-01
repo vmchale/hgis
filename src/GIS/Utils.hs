@@ -2,8 +2,11 @@ module GIS.Utils where
 
 import Data.Char
 
+stripExt :: String -> String
+stripExt = takeWhile (/='.')
+
 getExt :: String -> String
-getExt = fmap toLower . (drop 1) . (dropWhile (/='.'))
+getExt = fmap toLower . (takeWhile (/='.')) . reverse
 
 labels :: (Show a) => [[a]] -> [String]
 labels = map ((filter (/=' ')) . (take 35) . (drop 11) . show . (!!3))

@@ -37,7 +37,23 @@ library
                      , GIS.Graphics.Plot
                      , GIS.Graphics.Types
                      , GIS.Types
-  build-depends:       base >= 4.7 && < 5
+  if flag(cairo)
+    build-depends:   base >= 4.7 && < 5
+                     , readshp
+                     , optparse-generic
+                     , Chart
+                     , Chart-cairo
+                     , Chart-diagrams
+                     , lens
+                     , ansi-wl-pprint
+                     , composition
+                     , composition-extra
+                     , transformers
+                     , directory
+                     , colour
+                     , data-default
+  else
+    build-depends:   base >= 4.7 && < 5
                      , readshp
                      , optparse-generic
                      , Chart
