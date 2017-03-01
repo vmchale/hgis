@@ -25,9 +25,12 @@
   - [x] also have flag to optionally install cairo parts (so no need for unhaskell!)
 - [ ] measure compactness mathematically :)
   - [ ] current method
+    - [x] measure perimeter
+    - [ ] measure area
   - [ ] fractal dimension
   - [ ] concavity obviously
   - [ ] look at what's been done already w.r.t. appealing to justices (integrate other voter data? also account "how close" they are to distr. rather than just dem/rep)
 - [ ] consider an optimizing program to show non-gerrymandered districts
+- [ ] haddock
 - [ ] yesod etc. webapp would be really good for public engagement
   - [ ] would require elm/purescript though :|

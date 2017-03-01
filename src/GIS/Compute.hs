@@ -27,7 +27,7 @@ getDistricts filepath = do
         --putStrLn . unlines . (map show) $ zip3 districtLabels perimeters areas
         pure $ map (\(a,b,c,d) -> District a b c d) tuple
 
-getShapes :: FilePath -> IO [[[Point]]]
+getShapes :: FilePath -> IO [[Polygon]]
 getShapes = (fmap (fmap ((project mercator) . (view shape)))) . getDistricts
 
 getAll = (fmap concat) . getShapes
