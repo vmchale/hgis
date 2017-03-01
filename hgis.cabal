@@ -60,7 +60,6 @@ library
                      , readshp
                      , optparse-generic
                      , Chart
-                     , Chart-cairo
                      , Chart-diagrams
                      , lens
                      , ansi-wl-pprint
