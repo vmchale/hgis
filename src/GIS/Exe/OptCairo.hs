@@ -3,7 +3,7 @@ module GIS.Exe.OptCairo
     , Program (..)
     ) where
 
-import GIS.Compute
+import GIS.Hylo
 import Control.Lens
 import Control.Monad
 import Options.Generic hiding (getAll)
@@ -26,5 +26,5 @@ exec = do
     let path = unHelpful . file $ clinput
     let outfile = unHelpful . output $ clinput
     case getExt outfile of
-        "svg" -> makeMapSVG "Testfile" outfile =<< getAll path
-        "png" -> makeMapPng "Testfile" outfile =<< getAll path
+        "svg" -> mkMapSVG outfile =<< districtToMap <$> getDistricts path
+        "png" -> mkMapPng outfile =<< districtToMap <$> getDistricts path

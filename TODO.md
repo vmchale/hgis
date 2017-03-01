@@ -1,4 +1,5 @@
 - [x] parse tiger data
+- [ ] Compute.hs -> Hylo.hs
 - [ ] read a .shp object when a dbf file doesn't exist.
   - [ ] take in dimensions of 
 - [x] generate a .png from tiger data (for debugging)

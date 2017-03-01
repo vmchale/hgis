@@ -30,7 +30,7 @@ library
     exposed-modules:   GIS.Exe.Opt
                      , GIS.Math.Spherical
                      , GIS.Graphics.PlotSVG
-  other-modules:       GIS.Compute
+  other-modules:       GIS.Hylo
                      , GIS.Math.Projections
                      , GIS.Math.Utils
                      , GIS.Utils

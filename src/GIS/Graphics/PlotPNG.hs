@@ -7,7 +7,7 @@ import GIS.Types
 import Data.Monoid
 import Data.Function.Contravariant.Syntax
 import Control.Monad
-import GIS.Compute
+import GIS.Hylo
 import GIS.Math.Projections
 import Control.Lens
 import Control.Lens.Tuple
@@ -15,13 +15,19 @@ import Control.Lens.Tuple
 import GIS.Math.Spherical
 import GIS.Utils
 import GIS.Graphics.Plot
+import GIS.Graphics.Types
 
 fileOptions = def { _fo_size = (1920, 1080) , _fo_format = PNG }
+
+mkMapPng :: FilePath -> Map -> IO ()
+mkMapPng path map = do
+    renderableToFile fileOptions path $ mkMap map
+    putStrLn ("...output written to " <> path)
 
 makeLabelledMapPng :: String -> FilePath -> [(Polygon, String)] -> IO ()
 makeLabelledMapPng title filepath points = do
     renderableToFile fileOptions filepath $ mkRenderableLabelled title points
     putStrLn ("...output written to " <> filepath)
 
-makeMapPng :: String -> FilePath -> [Polygon] -> IO ()
-makeMapPng = (flip zip (forever $ "")) -.** makeLabelledMapPng
+makeMapPng' :: String -> FilePath -> [Polygon] -> IO ()
+makeMapPng' = (flip zip (forever $ "")) -.** makeLabelledMapPng

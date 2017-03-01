@@ -6,7 +6,7 @@ module GIS.Exe.Opt
     , Program (..)
     ) where
 
-import GIS.Compute
+import GIS.Hylo
 import Control.Lens
 import Control.Monad
 import Options.Generic hiding (getAll)
@@ -37,7 +37,7 @@ exec = do
     makeFolders
     let outfile = unHelpful . output $ clinput
     let path = unHelpful . file $ clinput
-    makeMapSVG "amerikey" outfile =<< getAll path -- svg now idk?
+    mkMapSVG "example.svg" =<< districtToMap <$> getDistricts path -- svg now idk?
 
 makeFolders :: IO ()
 makeFolders = do
