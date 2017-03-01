@@ -1,8 +1,8 @@
 import Test.Hspec
 import GIS.Math.Spherical
 import GIS.Hylo
-import GIS.Graphics.PlotPNG
 import GIS.Graphics.PlotSVG
+import GIS.Graphics.PlotPNG
 
 main :: IO ()
 main = hspec $ do
