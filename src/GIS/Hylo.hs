@@ -1,6 +1,7 @@
 module GIS.Hylo where
 
 import Geometry.Shapefile.MergeShpDbf
+import Geometry.Shapefile.ReadShp
 import Geometry.Shapefile.Types
 import Data.List
 import Data.Maybe
@@ -16,15 +17,18 @@ import GIS.Graphics.Types
 import Data.Default
 import System.Directory
 
+districtToMapP :: Projection -> [District] -> Map
+districtToMapP p districts = projectMap p $ districtToMap districts
+
 districtToMap :: [District] -> Map
 districtToMap districts = labelledDistricts .~ dist $ def
     where dist = gc $ zip (fmap _shape districts) (fmap _districtLabel districts)
-          gc = concat . (map (\(a,b) -> zip a (replicate (length a) b)))
+          gc = concatMap (\(a,b) -> zip a (replicate (length a) b))
 
 getDistricts :: FilePath -> IO [District]
 getDistricts filepath = do
         dbfExists <- doesFileExist (stripExt filepath <> ".dbf")
-        file <- readShpWithDbf filepath
+        file <- if dbfExists then readShpWithDbf filepath else readShpFile filepath
         let districtLabels = fromJust $ (fmap labels) $ mapM (shpRecLabel) . shpRecs $ file -- <$> for print? 
         let shapes = (map (getPolygon . fromJust . shpRecContents)) . shpRecs $ file
         let perimeters = map (getPerimeter . getPolygon . fromJust . shpRecContents) . shpRecs $ file

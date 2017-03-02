@@ -29,10 +29,10 @@ You can also clone this repository and type `stack build` if you want to start h
 From the command line, type
 
 ```
-hgis FILE.shp OUTPUT.svg
+hgis --file FILE.shp --output OUTPUT.svg
 ```
 
-to read a shapefile and write an svg. 
+to read a shapefile and write an svg.  
 
 #### Library
 

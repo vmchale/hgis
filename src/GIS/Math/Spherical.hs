@@ -27,6 +27,8 @@ areaTriangle x1 x2 x3 = r^2 * e
           c = distanceRad x2 x3
           distanceRad = on centralAngle toRadians
 
+-- mandelbrot/fractal dimension? 
+
 -- wait jk this only works on convex polygons
 areaConvex :: Polygon -> Double
 areaConvex (base1:base2:pts) = (view _1) $ foldr stepArea (0,base2) pts

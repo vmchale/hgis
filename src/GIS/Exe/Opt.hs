@@ -25,8 +25,6 @@ data Program = Program { file :: FilePath <?> "Path to dbf file"
                        , output :: FilePath <?> "Where to write the output"
                        , generateAll :: Bool <?> "Whether to generate a separate file for each shape"
                        , noComputations :: Bool <?> "Generate map without annotating area, perimeter, etc."
-                       -- specify a list of states to allow? idkkkkk
-                       -- of course bool for svg/png is a good idea!
                        } deriving (Generic)
 
 instance ParseRecord Program

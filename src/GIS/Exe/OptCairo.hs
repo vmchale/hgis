@@ -22,9 +22,11 @@ import GIS.Exe.Opt hiding (exec)
 exec :: IO ()
 exec = do
     clinput <- getRecord "GIS cli utility for haskell"
-    --makeFolders
     let path = unHelpful . file $ clinput
     let outfile = unHelpful . output $ clinput
+    --case getExt outfile of
+    --    "svg" -> mkMapSVG outfile =<< districtToMap <$> getDistricts path
+    --    "png" -> mkMapPng outfile =<< districtToMap <$> getDistricts path
     case getExt outfile of
-        "svg" -> mkMapSVG outfile =<< districtToMap <$> getDistricts path
-        "png" -> mkMapPng outfile =<< districtToMap <$> getDistricts path
+        "svg" -> mkMapSVG outfile =<< districtToMapP mercator <$> getDistricts path
+        "png" -> mkMapPng outfile =<< districtToMapP mercator <$> getDistricts path

@@ -27,15 +27,16 @@ library
                      , GIS.Graphics.PlotPNG
                      , GIS.Graphics.PlotSVG
                      , GIS.Hylo
+                     , GIS.Math.Projections
   }
   else {
     exposed-modules:   GIS.Exe.Opt
                      , GIS.Math.Spherical
                      , GIS.Graphics.PlotSVG
                      , GIS.Hylo
+                     , GIS.Math.Projections
   }
-  other-modules:       GIS.Math.Projections
-                     , GIS.Math.Utils
+  other-modules:       GIS.Math.Utils
                      , GIS.Utils
                      , GIS.Graphics.Plot
                      , GIS.Graphics.Types
