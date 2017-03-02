@@ -34,6 +34,14 @@ hgis --file FILE.shp --output OUTPUT.svg
 
 to read a shapefile and write an svg.  
 
+You can use e.g.
+
+```
+hgis --file FILE.shp --output OUTPUT.svg --projection bonne
+```
+
+to force the use of the Bonne projection. 
+
 #### Library
 
 ### Documentation
