@@ -1,10 +1,14 @@
-### About
+# HGIS (aichgis)
 
-This is a library and command-line tool for GIS. 
+## About
 
-Currently, it generates maps and computes perimters, areas, and compactness. You can use it to look at your congressional district for evidence of gerrymandering. 
+This is a library and command-line tool for GIS.
 
-### Installation
+Currently, it generates maps and computes perimters, areas, and compactness. You
+can use it to look at your congressional district for evidence of
+gerrymandering.
+
+## Installation
 
 hgis is best installed with [stack](https://haskellstack.org/). Try
 
@@ -18,32 +22,35 @@ or
 stack install hgis --flag hgis:-cairo
 ```
 
-to install with bindings [cairo](https://cairographics.org/) library, which will enable output as PNGs. 
+to install with bindings [cairo](https://cairographics.org/) library, which will
+enable outputs as PNGs.
 
-You can also clone this repository and type `stack build` if you want to start hacking. 
+You can also clone this repository and type `stack build` if you want to start hacking.
 
-### Usage
+## Usage
 
-#### Command-line
+### Command-line
 
 From the command line, type
 
 ```
-hgis --file FILE.shp --output OUTPUT.svg
+hgis map --output OUTPUT.svg FILE.shp
 ```
 
-to read a shapefile and write an svg.  
+to read a shapefile and write an svg.
 
 You can use e.g.
 
 ```
-hgis --file FILE.shp --output OUTPUT.svg --projection bonne
+hgis map --output OUTPUT.svg --projection bonne FILE.shp
 ```
 
-to force the use of the Bonne projection. 
+to force the use of the Bonne projection.
 
-#### Library
+### Library
 
-### Documentation
+## Documentation
 
-#### Haddock
+### Haddock
+
+Haddock documentation can be accessed through hackage.

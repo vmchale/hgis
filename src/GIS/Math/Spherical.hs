@@ -1,3 +1,4 @@
+-- | Utilities to compute area, perimeter, etc. on the surface of a sphere.
 module GIS.Math.Spherical where
 
 import Control.Lens
@@ -9,11 +10,11 @@ import Data.Composition
 import GIS.Math.Projections
 import GIS.Math.Utils
 
--- use projection ahead of time so it works nicely
--- idc about much besides labelling tbh
+-- | averages the coördinates of a polygon, returning a point.
 shittyCentroid :: Polygon -> Point
 shittyCentroid poly = (avg $ map fst poly, avg $ map snd poly)
 
+-- | Average over a foldable container
 avg :: (RealFrac a, Foldable t) => t a -> a
 avg list = sum list / (fromIntegral . length $ list)
 
@@ -28,26 +29,24 @@ areaTriangle x1 x2 x3 = r^2 * e
           distanceRad = on centralAngle toRadians
 
 -- mandelbrot/fractal dimension? 
+-- consider "area of largest circumscribable circle" as well. 
 
--- wait jk this only works on convex polygons
+-- | Compute the area of a convex polygon on the surface of a sphere.
 areaConvex :: Polygon -> Double
 areaConvex (base1:base2:pts) = (view _1) $ foldr stepArea (0,base2) pts
     where stepArea point (sum, base) = (sum + (areaTriangle base1 base point), point)
 
--- hawaii yields: -0.6010684007833547
--- should be: 28,311 km^2
--- montana: 18.707615797916404
--- 381,154
--- south dakota: 199,900 km^2 / -13.273195731718289
--- ok sooo it's working-ish with areaPolyReactangular? 
+-- | Uses areal projection; then finds area of the polygon. 
+-- WARNING: not yet to scale. 
 areaPolygon :: Polygon -> Double
 areaPolygon = {--(*((6371*pi)^2)) . --}areaPolyRectangular . (fmap bonne)
 
+-- | Find the area of a polygon with rectangular coördinates given. 
 areaPolyRectangular :: Polygon -> Double
 areaPolyRectangular (pt:pts) = 0.5 * (fst (foldl' areaPolyCalc (0,pt) pts))
     where areaPolyCalc (sum,(x,y)) (xNext,yNext) = (sum + (x * yNext - xNext * y),(xNext,yNext))
 
--- | Distance in kilometers
+-- | Distance in kilometers between two points given in degrees. 
 distance :: (Double, Double) -> (Double, Double) -> Double
 distance = (*6371) .* (on centralAngle toRadians)
 

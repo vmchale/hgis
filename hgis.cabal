@@ -41,17 +41,17 @@ library
                      , GIS.Graphics.Plot
                      , GIS.Graphics.Types
                      , GIS.Types
+                     , GIS.Exe.Parser
   if flag(cairo) {
     build-depends:     base >= 4.7 && < 5
                      , readshp
-                     , optparse-generic
+                     , optparse-applicative
                      , Chart
                      , Chart-cairo
                      , Chart-diagrams
                      , lens
-                     , ansi-wl-pprint
                      , composition
-                     , composition-extra
+                     , ansi-wl-pprint
                      , transformers
                      , directory
                      , colour
@@ -60,13 +60,12 @@ library
   else {
     build-depends:     base >= 4.7 && < 5
                      , readshp
-                     , optparse-generic
+                     , optparse-applicative
                      , Chart
                      , Chart-diagrams
                      , lens
                      , ansi-wl-pprint
                      , composition
-                     , composition-extra
                      , transformers
                      , directory
                      , colour
