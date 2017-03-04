@@ -29,10 +29,3 @@ makeFoldersSVG :: [Map] -> IO ()
 makeFoldersSVG maps = do
     createDirectoryIfMissing False "maps"
     mapM_ (\m -> mkMapSVG ("maps/" <> (view title m) <> ".svg") m) maps
-
-{--
-makeFolders :: [District] -> IO ()
-makeFolders districts = do
-    createDirectoryIfMissing False "maps/"
-    mapM_ (\d -> makeMapSVG (view districtLabel d) ("maps/" <> (view districtLabel d) <> (show $ view perimeter d) <> ".png") (view shape d)) districts
-    --}

@@ -5,6 +5,8 @@ import GIS.Types
 import Control.Lens
 import Control.Lens.Tuple
 
+sinc x = sin x / x
+
 -- | Convert a `Double` from degrees to radians.
 radians = (*(pi/180))
 

@@ -1,7 +1,9 @@
 name:                hgis
-version:             0.1.0.0
--- synopsis:
--- description:
+version:             0.1.1.0
+synopsis:            Package and command-line for GIS with Haskell
+description:         Package containting functions to make graphs, read 
+                     shapefiles, and compute areas/perimeters of
+                     geographic features. 
 homepage:            https://github.com/vmchale/hgis#readme
 license:             BSD3
 license-file:        LICENSE
@@ -10,41 +12,31 @@ maintainer:          tmchale@wisc.edu
 copyright:           Copyright: (c) 2016 Vanessa McHale
 category:            Web
 build-type:          Simple
-extra-source-files:  README.md
+extra-source-files:  README.md, stack.yaml, docs/manual.tex
 cabal-version:       >=1.10
 
-Flag cairo {
-  Description: Enable cairo backend for png maps
-  Default:     False
-}
-
 library
-  hs-source-dirs:      src
-  if flag(cairo) {
-    exposed-modules:   GIS.Exe.Opt
+  hs-source-dirs:      src, src/depends/readshp
+  exposed-modules:     GIS.Exe.Opt
                      , GIS.Exe.OptCairo
                      , GIS.Math.Spherical
                      , GIS.Graphics.PlotPNG
                      , GIS.Graphics.PlotSVG
                      , GIS.Hylo
                      , GIS.Math.Projections
-  }
-  else {
-    exposed-modules:   GIS.Exe.Opt
-                     , GIS.Math.Spherical
-                     , GIS.Graphics.PlotSVG
-                     , GIS.Hylo
-                     , GIS.Math.Projections
-  }
   other-modules:       GIS.Math.Utils
                      , GIS.Utils
                      , GIS.Graphics.Plot
                      , GIS.Graphics.Types
                      , GIS.Types
                      , GIS.Exe.Parser
-  if flag(cairo) {
-    build-depends:     base >= 4.7 && < 5
-                     , readshp
+                     , Geometry.Shapefile
+                     , Geometry.Shapefile.MergeShpDbf
+                     , Geometry.Shapefile.ReadDbf
+                     , Geometry.Shapefile.ReadShp
+                     , Geometry.Shapefile.Types
+                     , Geometry.Shapefile.Internal
+  build-depends:       base >= 4.7 && < 5
                      , optparse-applicative
                      , Chart
                      , Chart-cairo
@@ -56,34 +48,21 @@ library
                      , directory
                      , colour
                      , data-default
-  }
-  else {
-    build-depends:     base >= 4.7 && < 5
-                     , readshp
-                     , optparse-applicative
-                     , Chart
-                     , Chart-diagrams
-                     , lens
-                     , ansi-wl-pprint
-                     , composition
-                     , transformers
-                     , directory
-                     , colour
-                     , data-default
-  }
-  if flag(cairo)
-    pkgconfig-depends: cairo
+                     , binary
+                     , bytestring
+                     , data-binary-ieee754
+                     , filepath
+                     , monad-loops
+  pkgconfig-depends:   cairo
   default-language:    Haskell2010
   default-extensions:  DeriveGeneric
                      , OverloadedStrings
 
 executable hgis
   hs-source-dirs:      app
-  if flag(cairo)
-    main-is:           MainPng.hs
-  else
-    main-is:           Main.hs
+  main-is:           MainPng.hs
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  -- -fllvm -optlo-O3 -O3
   build-depends:       base
                      , hgis
   default-language:    Haskell2010

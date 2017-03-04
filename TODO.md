@@ -1,24 +1,24 @@
 - [x] parse tiger data
-- [ ] vim/tokei plugin? 
+- [x] vim/tokei plugin? 
 - [ ] data type for Region, not just District
-- [ ] Compute.hs -> Hylo.hs
-- [ ] read a .shp object when a dbf file doesn't exist.
+- [x] Compute.hs -> Hylo.hs
+- [x] read a .shp object when a dbf file doesn't exist.
   - [ ] take in dimensions of 
 - [x] generate a .png from tiger data (for debugging)
-  - [ ] label interiors somehow?
+  - [x] label interiors somehow?
   - [ ] projections
-    - [ ] math.project module??
-    - [ ] craig retroazimuthal
+    - [x] math.project module??
+    - [x] craig retroazimuthal
     - [ ] gnomonic
-    - [ ] littrow
-    - [ ] fix mercator
+    - [x] littrow
+    - [x] fix mercator
     - [ ] gall stereographic
     - [ ] Peirce quincuncial
     - [ ] eckert IV
     - [ ] Mollweide
     - [ ] robinson
     - [ ] transverse mercator
-    - [ ] winkel triple
+    - [x] winkel triple
     - [ ] Kavrayskiy VII
     - [ ] Bottomley
     - [ ] Werner
@@ -30,6 +30,7 @@
   - [ ] current method
     - [x] measure perimeter
     - [ ] measure area
+    - [ ] measure area of circumscribed circle? 
   - [ ] fractal dimension
   - [ ] concavity obviously
   - [ ] look at what's been done already w.r.t. appealing to justices (integrate other voter data? also account "how close" they are to distr. rather than just dem/rep)
@@ -37,3 +38,4 @@
 - [ ] haddock
 - [ ] yesod etc. webapp would be really good for public engagement
   - [ ] would require elm/purescript though :|
+- [ ] LaTeX for the tutorial? 

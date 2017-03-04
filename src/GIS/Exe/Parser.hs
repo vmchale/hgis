@@ -76,4 +76,6 @@ pickProjection str = case str of
     Just "mercator" -> mercator
     Just "bonne" -> bonne
     Just "albers" -> albers washingtonDC
+    Just "winkel3" -> winkel3
+    Just "littow" -> littow
     Nothing -> id
