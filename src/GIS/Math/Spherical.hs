@@ -38,8 +38,10 @@ areaConvex (base1:base2:pts) = (view _1) $ foldr stepArea (0,base2) pts
 
 -- | Uses areal projection; then finds area of the polygon. 
 -- WARNING: not yet to scale. 
+-- (need to compute jacobian; ideally km^2/steridian
 areaPolygon :: Polygon -> Double
-areaPolygon = {--(*((6371*pi)^2)) . --}areaPolyRectangular . (fmap bonne)
+areaPolygon = (*factor) . areaPolyRectangular . (fmap bonne)
+    where factor = 1 -- 1717856/227.5506494212687
 
 -- | Find the area of a polygon with rectangular coördinates given. 
 areaPolyRectangular :: Polygon -> Double

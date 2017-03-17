@@ -5,6 +5,7 @@ import Geometry.Shapefile.MergeShpDbf
 import Geometry.Shapefile.ReadShp
 import Geometry.Shapefile.Types
 import Data.List
+import Data.Char
 import Data.Maybe
 import Data.Monoid
 import GIS.Math.Projections
@@ -45,7 +46,8 @@ districtToMapFilesP p = fmap (projectMap p) . districtToMapFiles
 
 -- | Given a list of districts, return a list of maps.
 districtToMapFiles :: [District] -> [Map]
-districtToMapFiles = map (\(District polygons label _ _) -> title .~ label $ labelledDistricts .~ (zip polygons (nullLabel polygons)) $ def)
+districtToMapFiles = map (\(District polygons label _ area) -> title .~ label ++ "-" ++ (show . sum $ area) $ labelledDistricts .~ (zip polygons (nullLabel polygons)) $ def)
+--districtToMapFiles = map (\(District polygons label _ _) -> title .~ label $ labelledDistricts .~ (zip polygons (nullLabel polygons)) $ def)
     where nullLabel polys = map (const "") [1..(length polys)]
 
 -- | Given the path to a shapefile, return a list of districts
@@ -56,7 +58,7 @@ getDistricts filepath = do
         let districtLabels = fromJust $ (fmap labels) $ mapM (shpRecLabel) . shpRecs $ file -- <$> for print? 
         let shapes = (map (getPolygon . fromJust . shpRecContents)) . shpRecs $ file
         let perimeters = map (getPerimeter . getPolygon . fromJust . shpRecContents) . shpRecs $ file
-        let areas = map (fmap areaPolyRectangular . getPolygon . fromJust . shpRecContents) . shpRecs $ file
+        let areas = map (fmap areaPolygon . getPolygon . fromJust . shpRecContents) . shpRecs $ file
         let tuple = zip4 shapes districtLabels perimeters areas
         pure $ fmap (\(a,b,c,d) -> District a b c d) tuple
 
