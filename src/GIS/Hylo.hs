@@ -22,7 +22,7 @@ import System.Directory
 -- | Get the areas of various objects and return a string suitable for printing
 districtArea :: [District] -> String
 districtArea districts = concat . intercalate (pure "\n") $ map (pure . show . distA) districts
-    where distA (District _ label _ area) = (label, sum area)
+    where distA (District _ label _ area) = (label, sum area) -- TODO figure out which one is the correct one
 
 -- should mention it's km
 -- | Get the perimeters of various objects and return a string suitable for printing

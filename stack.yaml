@@ -36,7 +36,6 @@ resolver: lts-8.5
 # non-dependency (i.e. a user package), and its test suites and benchmarks
 # will not be run. This is useful for tweaking upstream packages.
 packages:
-- dist-newstyle/tmp/diagrams-lib-24845/diagrams-lib-1.4.0.1
 - '.'
 # Dependency packages to be pulled from upstream that are not in the resolver
 # (e.g., acme-missiles-0.3)

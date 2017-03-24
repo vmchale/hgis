@@ -40,13 +40,14 @@ areaConvex (base1:base2:pts) = (view _1) $ foldr stepArea (0,base2) pts
 -- WARNING: not yet to scale. 
 -- (need to compute jacobian; ideally km^2/steridian
 areaPolygon :: Polygon -> Double
-areaPolygon = (*factor) . areaPolyRectangular . (fmap bonne)
-    where factor = 1 -- 1717856/227.5506494212687
+areaPolygon = (*factor) . areaPolyRectangular . fmap (bonne . toRadians)
+    where factor = 1717856/4.219690791828533e-2
 
 -- | Find the area of a polygon with rectangular coördinates given. 
 areaPolyRectangular :: Polygon -> Double
-areaPolyRectangular (pt:pts) = 0.5 * (fst (foldl' areaPolyCalc (0,pt) pts))
-    where areaPolyCalc (sum,(x,y)) (xNext,yNext) = (sum + (x * yNext - xNext * y),(xNext,yNext))
+areaPolyRectangular (pt:pts) = abs . (*0.5) . fst $ (foldl' areaPolyCalc (0,pt) pts) -- different result with foldl' and foldr? b/c pt gets stuck in different places.
+    where areaPolyCalc (sum,(x1,y1)) (x2, y2) = (sum + (x1 * y2 - x2 * y1),(x2,y2)) -- wrong end! should end w/ xny1-ynx1 MAXIMUM values for coordinates don't make any sense? 
+          ((x1, y1),(xn, yn)) = (pt, last pts)
 
 -- | Distance in kilometers between two points given in degrees. 
 distance :: (Double, Double) -> (Double, Double) -> Double

@@ -1,5 +1,5 @@
 name:                hgis
-version:             0.1.1.2
+version:             0.1.2.1
 synopsis:            Package and command-line for GIS with Haskell
 description:         Package containting functions to make graphs, read 
                      shapefiles, and compute areas/perimeters of
@@ -12,7 +12,7 @@ maintainer:          tmchale@wisc.edu
 copyright:           Copyright: (c) 2016 Vanessa McHale
 category:            Web
 build-type:          Simple
-extra-source-files:  README.md, stack.yaml, docs/manual.tex, docs/manual.pdf,  src/depends/readshp/LICENSE
+extra-source-files:  README.md, stack.yaml, docs/manual.tex, docs/manual.pdf, src/depends/readshp/LICENSE, LICENSE-readshp
 cabal-version:       >=1.10
 
 Flag llvm-fast {
