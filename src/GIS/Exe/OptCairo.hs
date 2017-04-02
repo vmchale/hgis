@@ -39,7 +39,8 @@ pick (Program (Computation comp Nothing) infile) = --slightly wrong but eh.
     case comp of
         "perimeter" -> putStrLn =<< districtPerimeter <$> getDistricts infile
         "area" -> putStrLn =<< districtArea <$> getDistricts infile
-        --compactness too! 
+        "compactness" -> putStrLn =<< districtCompactness <$> getDistricts infile
+        _ -> putStrLn "computation not recognized"
 
 -- | Make maps as png files.
 makeFoldersPng :: [Map] -> IO ()

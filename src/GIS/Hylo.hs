@@ -30,6 +30,11 @@ districtPerimeter :: [District] -> String
 districtPerimeter districts = concat . intercalate (pure "\n") $ map (pure . show . distP) districts
     where distP (District _ label perimeter _) = (label, perimeter)
 
+-- FIXME use the other function? put compactness in 
+districtCompactness :: [District] -> String
+districtCompactness districts = concat . intercalate (pure "\n") $ map (pure . show . distC) districts
+    where distC (District _ label perimeter area) = (label, (sum area)/perimeter^2)
+
 -- | Given a projection and lists of districts, draw a map.
 districtToMapP :: Projection -> [District] -> Map
 districtToMapP p = projectMap p . districtToMap
@@ -57,16 +62,10 @@ getDistricts filepath = do
         file <- if dbfExists then readShpWithDbf filepath else readShpFile filepath
         let districtLabels = fromJust $ (fmap labels) $ mapM (shpRecLabel) . shpRecs $ file -- <$> for print? 
         let shapes = (map (getPolygon . fromJust . shpRecContents)) . shpRecs $ file
-        let perimeters = map (getPerimeter . getPolygon . fromJust . shpRecContents) . shpRecs $ file
+        let perimeters = map (totalPerimeter . getPolygon . fromJust . shpRecContents) . shpRecs $ file
         let areas = map (fmap areaPolygon . getPolygon . fromJust . shpRecContents) . shpRecs $ file
         let tuple = zip4 shapes districtLabels perimeters areas
         pure $ fmap (\(a,b,c,d) -> District a b c d) tuple
-
--- | Given a list of polygons, return the total area.
-getPerimeter :: [Polygon] -> Double
-getPerimeter lines = sum $ fmap segmentLength lines
-    where segmentLength [x1, x2]       = distance x1 x2
-          segmentLength (x1:x2:points) = segmentLength (x2:points) + distance x1 x2
 
 -- | Helper function for extracting from shapefiles.
 getPolygon :: RecContents -> [Polygon]

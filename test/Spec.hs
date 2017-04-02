@@ -13,6 +13,6 @@ main = hspec $ do
     describe "mercatorFullPng" $ do
         parallel $ it "Reads a map and writes a .png with the mercator projection" $ do
             (mkMapPng "test/testmap.png" =<< districtToMapP bonne <$> getDistricts "test/data/worldmap/TM_WORLD_BORDERS-0.3.shp") >>= (`shouldBe` ())
-    describe "mercatorFullSVG" $ do
-        parallel $ it "Reads a map and writes a .svg with the mercator projection" $ do
-            (mkMapSVG "test/testmap.svg" =<< districtToMapP bonne <$> getDistricts "test/data/worldmap/TM_WORLD_BORDERS-0.3.shp") >>= (`shouldBe` ())
+    --describe "mercatorFullSVG" $ do
+    --    parallel $ it "Reads a map and writes a .svg with the mercator projection" $ do
+    --        (mkMapSVG "test/testmap.svg" =<< districtToMapP bonne <$> getDistricts "test/data/worldmap/TM_WORLD_BORDERS-0.3.shp") >>= (`shouldBe` ())

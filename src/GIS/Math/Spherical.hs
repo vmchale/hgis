@@ -1,4 +1,4 @@
--- | Utilities to compute area, perimeter, etc. on the surface of a sphere.
+-- | Utilities to compute area, perimeterPolygon, etc. on the surface of a sphere.
 module GIS.Math.Spherical where
 
 import Control.Lens
@@ -31,6 +31,9 @@ areaTriangle x1 x2 x3 = r^2 * e
 -- mandelbrot/fractal dimension? 
 -- consider "area of largest circumscribable circle" as well. 
 
+compactness1 :: Polygon -> Double
+compactness1 p = (areaPolygon p)/(perimeterPolygon p)
+
 -- | Compute the area of a convex polygon on the surface of a sphere.
 areaConvex :: Polygon -> Double
 areaConvex (base1:base2:pts) = (view _1) $ foldr stepArea (0,base2) pts
@@ -43,10 +46,17 @@ areaPolygon :: Polygon -> Double
 areaPolygon = (*factor) . areaPolyRectangular . fmap (bonne . toRadians)
     where factor = 1717856/4.219690791828533e-2
 
+-- | Given a list of polygons, return the total area.
+totalPerimeter :: [Polygon] -> Double
+totalPerimeter lines = sum $ fmap perimeterPolygon lines
+
+perimeterPolygon [x1, x2]       = distance x1 x2
+perimeterPolygon (x1:x2:points) = perimeterPolygon (x2:points) + distance x1 x2
+
 -- | Find the area of a polygon with rectangular coördinates given. 
 areaPolyRectangular :: Polygon -> Double
-areaPolyRectangular (pt:pts) = abs . (*0.5) . fst $ (foldl' areaPolyCalc (0,pt) pts) -- different result with foldl' and foldr? b/c pt gets stuck in different places.
-    where areaPolyCalc (sum,(x1,y1)) (x2, y2) = (sum + (x1 * y2 - x2 * y1),(x2,y2)) -- wrong end! should end w/ xny1-ynx1 MAXIMUM values for coordinates don't make any sense? 
+areaPolyRectangular (pt:pts) = abs . (*0.5) . fst $ (foldl' areaPolyCalc (0,pt) pts)
+    where areaPolyCalc (sum,(x1,y1)) (x2, y2) = (sum + (x1 * y2 - x2 * y1),(x2,y2))
           ((x1, y1),(xn, yn)) = (pt, last pts)
 
 -- | Distance in kilometers between two points given in degrees. 
