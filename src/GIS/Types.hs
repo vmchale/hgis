@@ -18,6 +18,7 @@ data District = District { _shape         :: [Polygon]
                          , _districtLabel :: String
                          , _perimeter     :: Double
                          , _area          :: [Double]
+                         , _compactness   :: Double
                          } deriving (Generic, Show)
 
 makeLenses ''District
