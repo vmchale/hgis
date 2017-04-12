@@ -1,3 +1,4 @@
+{-# LANGUAGE RankNTypes #-}
 -- | This module contains the parser for the command-line options
 module GIS.Exe.Parser where
 
@@ -14,15 +15,16 @@ data Program = Program { com :: Command
 
 -- | Data type for the appropriate subcommand
 data Command = Computation { computation :: String , outputM :: Maybe FilePath } 
-    | MapMaker { output :: FilePath , generateAll :: Bool, projection :: Maybe String }
-    -- also a "map and label command?"
+    | MapMaker { output :: FilePath , generateAll :: Bool , projection :: Maybe String }
+    | MapLabel { output :: FilePath , generateAll :: Bool , projection :: Maybe String , computatation :: String }
 
 -- | Parses the `Program` data type
 program :: Parser Program
 program = Program 
     <$> hsubparser
         ( command "compute" (info computationP ( progDesc "Compute perimeter, area, etc. of map" ))
-        <> command "map" (info mapMaker ( progDesc "Make a map from a shapefile database." )))
+        <> command "map" (info mapMaker ( progDesc "Make a map from a shapefile database." ))
+        <> command "labelmap" (info mapLabelMaker ( progDesc "Make a map from a shapefile database, and label areas with relevant info" )))
     <*> ( argument str ( metavar "SHAPEFILE" <> help "Path to .shp file" ) )
 
 -- | Parses the `Command` datatype into a Computation
@@ -36,6 +38,27 @@ computationP = Computation
         <> short 'o'
         <> metavar "OUTPUT"
         <> help "Where to write output" ) )
+
+-- | Parses the `Command` datatype into a map
+mapLabelMaker :: Parser Command
+mapLabelMaker = MapLabel
+    <$> strOption
+        (long "output"
+        <> short 'o'
+        <> metavar "OUTPUT"
+        <> help "Where to write the image/map" )
+    <*> switch
+        (long "generate-all"
+        <> short 'a'
+        <> help "Whether to generate a separate file for each object in the shapefile" )
+    <*> ( optional $ strOption
+        (long "projection"
+        <> short 'p'
+        <> help "Which projection to use, e.g. mercator etc.") )
+    <*> ( strOption
+        (long "label"
+        <> short 'p'
+        <> help "What aspect to label (area, perimeter, compactness)") )
 
 -- | Parses the `Command` datatype into a map
 mapMaker :: Parser Command
@@ -62,12 +85,9 @@ helpDisplay = info ( program <**> helper)
     <> progDesc "GIS for Haskell. Can make maps, compute areas/perimeters for shapefiles."
     <> header "hgis - GIS in Haskell" )
 
-{--
-pickComputation :: String -> District -> [Double]
-pickComputation str dist = case str of
-    "perimeter" -> pure $ view perimeter dist
-    "area" -> view area dist
---}
+pickLens :: String -> Lens' District Double
+pickLens "compactness" = compactness
+pickLens "perimeter" = perimeter
 
 -- | Parse a `Maybe String` into the appropriate `Projection`, doing nothing for
 -- a `Nothing`

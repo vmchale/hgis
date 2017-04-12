@@ -1,3 +1,4 @@
+{-# LANGUAGE RankNTypes #-}
 -- | Module to transform shapefiles.
 module GIS.Hylo where
 
@@ -18,13 +19,13 @@ import GIS.Types
 import GIS.Graphics.Types
 import Data.Default
 import System.Directory
+import Data.Composition
 
 -- | Get the areas of various objects and return a string suitable for printing
 districtArea :: [District] -> String
 districtArea districts = concat . intercalate (pure "\n") $ map (pure . show . distA) districts
     where distA (District _ label _ area _) = (label, sum area) -- TODO figure out which one is the correct one
 
--- should mention it's km
 -- | Get the perimeters of various objects and return a string suitable for printing
 districtPerimeter :: [District] -> String
 districtPerimeter districts = concat . intercalate (pure "\n") $ map (pure . show . distP) districts
@@ -39,11 +40,18 @@ districtCompactness districts = concat . intercalate (pure "\n") $ map (pure . s
 districtToMapP :: Projection -> [District] -> Map
 districtToMapP p = projectMap p . districtToMap
 
+-- | Given a projection and lists of districts, draw a map, with labels determined by a lens
+districtToMapLensP :: (Show a) => Projection -> Lens' District a -> [District] -> Map
+districtToMapLensP p lens districts = projectMap p (districtToMapLens lens districts)
+
+-- | Given a list of districts, draw a map, with labels determined by a lens.
+districtToMapLens :: (Show a) => Lens' District a -> [District] -> Map
+districtToMapLens lens districts = labelledDistricts .~ dist $ def
+    where dist = zip (fmap (_shape) districts) (map (show . view lens) districts)
+
 -- | Given a list of districts, draw a map.
 districtToMap :: [District] -> Map
-districtToMap districts = labelledDistricts .~ dist $ def
-    where dist = gc $ zip (fmap _shape districts) (fmap _districtLabel districts)
-          gc = concatMap (\(a,b) -> zip a (replicate (length a) b))
+districtToMap = districtToMapLens districtLabel 
 
 -- | Given a projection and list of districts, return a list of maps.
 districtToMapFilesP :: Projection -> [District] -> [Map]
@@ -51,22 +59,19 @@ districtToMapFilesP p = fmap (projectMap p) . districtToMapFiles
 
 -- | Given a list of districts, return a list of maps.
 districtToMapFiles :: [District] -> [Map]
-districtToMapFiles = map (\(District polygons label _ area _) -> title .~ label ++ "-" ++ (show . sum $ area) $ labelledDistricts .~ (zip polygons (nullLabel polygons)) $ def)
-    where nullLabel polys = map (const "") [1..(length polys)]
+districtToMapFiles = map (\(District polygons label _ area _) -> title .~ label ++ "-" ++ (show . sum $ area) $ labelledDistricts .~ (pure (polygons,"")) $ def)
 
 -- | Given the path to a shapefile, return a list of districts
 getDistricts :: FilePath -> IO [District]
 getDistricts filepath = do
         dbfExists <- doesFileExist (stripExt filepath <> ".dbf")
         file <- if dbfExists then readShpWithDbf filepath else readShpFile filepath
-        let districtLabels = fromJust $ (fmap labels) $ mapM (shpRecLabel) . shpRecs $ file -- <$> for print? 
+        let districtLabels = fromJust $ (fmap labels) $ mapM (shpRecLabel) . shpRecs $ file -- labels + field descriptions?
         let shapes = (map (getPolygon . fromJust . shpRecContents)) . shpRecs $ file
         let perimeters = map (totalPerimeter . getPolygon . fromJust . shpRecContents) . shpRecs $ file
         let areas = map (fmap areaPolygon . getPolygon . fromJust . shpRecContents) . shpRecs $ file
         let compacticity = map (relativeCompactness . concat . getPolygon . fromJust . shpRecContents) . shpRecs $ file
         pure $ zipWith5 (\a b c d e -> District a b c d e) shapes districtLabels perimeters areas compacticity
-        --let tuple = zip5 shapes districtLabels perimeters areas compactness
-        --pure $ fmap (\(a,b,c,d,e) -> District a b c d e) tuple
 
 -- | Helper function for extracting from shapefiles.
 getPolygon :: RecContents -> [Polygon]

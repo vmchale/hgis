@@ -18,9 +18,11 @@ import GIS.Graphics.Types
 
 pick :: Program -> IO ()
 pick (Program (MapMaker outfile False projection) infile) = let p = pickProjection projection in
-    mkMapSVG outfile =<< districtToMapP p <$> getDistricts infile -- svg now idk?
+    mkMapSVG outfile =<< districtToMapP p <$> getDistricts infile 
 pick (Program (MapMaker outfile True projection) infile) = let p = pickProjection projection in
     makeFoldersSVG =<< districtToMapFilesP p <$> getDistricts infile
+pick (Program (MapLabel outfile False projection lensName) infile) = let p = pickProjection projection in
+    mkMapSVG outfile =<< districtToMapLensP p (pickLens lensName) <$> getDistricts infile -- FIXME make it work with -a (generate-all)
 
 exec :: IO ()
 exec = pick =<< execParser helpDisplay

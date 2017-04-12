@@ -27,4 +27,4 @@ readShpWithDbf fp = do
     }
 
 addRecLabel :: ShpRec -> [DbfRecord] -> ShpRec
-addRecLabel sr labels = sr { shpRecLabel = Just labels }
+addRecLabel sr labels = sr { shpRecLabel = Just (labels) } -- FIXME add field name as string

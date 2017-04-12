@@ -34,13 +34,15 @@ pick :: Program -> IO ()
 pick (Program (MapMaker outfile False projection) infile) = let p = pickProjection projection in
     mkMap outfile =<< districtToMapP p <$> getDistricts infile -- svg now idk?
 pick (Program (MapMaker outfile True projection) infile) = let p = pickProjection projection in
-    makeFoldersPng =<< districtToMapFilesP p <$> getDistricts infile
+    makeFoldersPng =<< districtToMapFilesP p <$> getDistricts infile -- TODO fix this
 pick (Program (Computation comp Nothing) infile) = --slightly wrong but eh. 
     case comp of
         "perimeter" -> putStrLn =<< districtPerimeter <$> getDistricts infile
         "area" -> putStrLn =<< districtArea <$> getDistricts infile
         "compactness" -> putStrLn =<< districtCompactness <$> getDistricts infile
         _ -> putStrLn "computation not recognized"
+pick (Program (MapLabel outfile False projection lensName) infile) = let p = pickProjection projection in
+    mkLensMap "" outfile (pickLens lensName) =<< getDistricts infile -- FIXME make it work with -a (generate-all) and make it not bind things together??
 
 -- | Make maps as png files.
 makeFoldersPng :: [Map] -> IO ()

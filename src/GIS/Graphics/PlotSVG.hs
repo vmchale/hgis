@@ -1,3 +1,5 @@
+{-# LANGUAGE RankNTypes #-}
+
 -- | Module to generate SVGs from shapefiles.
 module GIS.Graphics.PlotSVG where
 
@@ -22,12 +24,7 @@ mkMapSVG path map = do
     renderableToFile fileOptions path $ mkMapR map
     putStrLn ("...output written to " <> path)
 
-{--
-makeLabelledMapSVG :: String -> FilePath -> [(Polygon, String)] -> IO ()
-makeLabelledMapSVG title filepath points = do
-    renderableToFile fileOptions filepath $ mkRenderableLabelled title points
+makeLensMapSVG :: (Show a) => String -> FilePath -> Lens' District a -> [District] -> IO ()
+makeLensMapSVG title filepath lens districts = do
+    renderableToFile fileOptions filepath $ mkRenderableLens lens districts title
     putStrLn ("...output written to " <> filepath)
-
-makeMapSVG :: String -> FilePath -> [Polygon] -> IO ()
-makeMapSVG = (flip zip (forever "")) -.** makeLabelledMapSVG
---}

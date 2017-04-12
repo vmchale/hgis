@@ -1,3 +1,5 @@
+{-# LANGUAGE RankNTypes #-}
+
 -- | Module to generate PNGs from shapefiles
 module GIS.Graphics.PlotPNG where
 
@@ -30,18 +32,25 @@ mkMap filepath map = case getExt filepath of
     "png" -> mkMapPng filepath map
     "svg" -> mkMapSVG filepath map
 
+-- | Given a `Map` write it to file, where the format is determined by the
+-- extension.
+mkLensMap :: (Show a) => String -> FilePath -> Lens' District a -> [District] -> IO ()
+mkLensMap title filepath lens districts = case getExt filepath of
+    "png" -> makeLensMapPng title filepath lens districts
+    "svg" -> makeLensMapSVG title filepath lens districts
+
 -- | Given a `Map`, write it to file. 
 mkMapPng :: FilePath -> Map -> IO ()
 mkMapPng path map = do
     renderableToFile fileOptions path $ mkMapR map
     putStrLn ("...output written to " <> path)
 
-{--
-makeLabelledMapPng :: String -> FilePath -> [(Polygon, String)] -> IO ()
-makeLabelledMapPng title filepath points = do
-    renderableToFile fileOptions filepath $ mkRenderableLabelled title points
+makeLensMapPng :: (Show a) => String -> FilePath -> Lens' District a -> [District] -> IO ()
+makeLensMapPng title filepath lens districts = do
+    renderableToFile fileOptions filepath $ mkRenderableLens lens districts title
     putStrLn ("...output written to " <> filepath)
 
+{--
 makeMapPng' :: String -> FilePath -> [Polygon] -> IO ()
 makeMapPng' = (flip zip (forever $ "")) -.** makeLabelledMapPng
 --}

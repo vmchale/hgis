@@ -11,9 +11,7 @@ import Control.Lens
 data Map = Map { _projection :: Projection
                , _title :: String
                , _labelEntities :: Bool -- whether to label districts
-               , _labelledDistricts :: [(Polygon, String)] -- the data we actually want to map
-               --technically just needs to be a 
-               --though for that matter then projection should also have a typeclass!
+               , _labelledDistricts :: [([Polygon], String)] -- the data we actually want to map
                }
 
 makeLenses ''Map

@@ -71,4 +71,4 @@ project f = fmap (f . toRadians)
 
 -- | Helper to apply a projection given a `Map`.
 projectMap :: Projection -> Map -> Map
-projectMap p = over (labelledDistricts) (fmap (over _1 (project p)))
+projectMap p = over (labelledDistricts) (fmap (over _1  (fmap (project p))))

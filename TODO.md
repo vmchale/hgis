@@ -1,4 +1,5 @@
 - [x] parse tiger data
+- [ ] consider DSL?? for filters etc.
 - [x] vim/tokei plugin? 
 - [ ] data type for Region, not just District
 - [x] Compute.hs -> Hylo.hs
