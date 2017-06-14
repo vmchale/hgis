@@ -25,7 +25,10 @@ program = Program
         ( command "compute" (info computationP ( progDesc "Compute perimeter, area, etc. of map" ))
         <> command "map" (info mapMaker ( progDesc "Make a map from a shapefile database." ))
         <> command "labelmap" (info mapLabelMaker ( progDesc "Make a map from a shapefile database, and label areas with relevant info" )))
-    <*> ( argument str ( metavar "SHAPEFILE" <> help "Path to .shp file" ) )
+    <*> ( argument str 
+            (metavar "SHAPEFILE" 
+            <> help "Path to .shp file"
+            <> completer (bashCompleter "file -X '!*.shp' -o plusdirs")))
 
 -- | Parses the `Command` datatype into a Computation
 computationP :: Parser Command
